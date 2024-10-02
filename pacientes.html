@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pacientes</title>
+    <style>
+        input {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+        tt {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #d400ff;
+        }
+    </style>
+</head>
+<body>
+
+<h1><tt>Lista de Pacientes</tt></h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>CPF</th>
+            <th>Hora</th>
+            <th>Deletar</th> <!-- Coluna para o botão de deletar -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Itera sobre a lista de pacientes e cria uma linha para cada paciente -->
+        {% for paciente in pacientes %}
+            <tr>
+                <td>{{ paciente[0] }}</td>
+                <td>{{ paciente[1] }}</td>
+                <td>{{ paciente[2] }}</td>
+                <td>{{ paciente[3] }}</td>
+                <td>{{ paciente[4] }}</td>
+                <td>
+                    <!-- Formulário para deletar o paciente com o ID -->
+                    <form action="{{ url_for('deletar_paciente', paciente_id=paciente[0]) }}" method="POST">
+                        <button type="submit">Deletar</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<tt>
+<h2>Adicionar Novo Paciente</h2>
+<form action="/novo_paciente" method="POST">
+    <label for="name">Nome:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="age">Idade:</label>
+    <input type="number" id="age" name="age" min="0" required><br>
+
+    <label for="cpf">CPF:</label>
+    <input type="number" id="cpf" name="cpf" pattern="\d{11}" placeholder="Ex: 12345678901" required><br>
+
+    <label for="hour">Hora:</label>
+    <input type="time" id="hour" name="hour" required><br>
+
+    <button type="submit">Adicionar Paciente</button>
+</form>
+</tt>
+</body>
+</html>
